@@ -65,24 +65,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="P2L-MS-r3h">
-                                <rect key="frame" x="121.5" y="327" width="171" height="300.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="P2L-MS-r3h">
+                                <rect key="frame" x="41.5" y="249.5" width="331" height="455"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IuL-Bp-qRo">
-                                        <rect key="frame" x="0.0" y="0.0" width="171" height="33.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IuL-Bp-qRo">
+                                        <rect key="frame" x="0.0" y="0.0" width="331" height="33.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aJu-aC-fDb">
-                                        <rect key="frame" x="0.0" y="68.5" width="171" height="26.5"/>
+                                        <rect key="frame" x="0.0" y="43.5" width="331" height="26.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <color key="textColor" systemColor="secondaryLabelColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="KQS-pb-gCS">
-                                        <rect key="frame" x="0.0" y="130.5" width="171" height="169.5"/>
+                                        <rect key="frame" x="0.0" y="80.5" width="331" height="329.5"/>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8vb-1B-ZKj">
+                                        <rect key="frame" x="0.0" y="420.5" width="331" height="34.5"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Update image...">
+                                            <fontDescription key="titleFontDescription" style="UICTFontTextStyleBody"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="updateImage" destination="6aK-qN-WkU" eventType="touchUpInside" id="EmJ-K1-Pmq"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="KQS-pb-gCS" secondAttribute="height" multiplier="1:1" constant="0.5" id="dr1-k1-fMb"/>
@@ -93,7 +103,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="P2L-MS-r3h" firstAttribute="centerY" secondItem="2vq-8s-Asz" secondAttribute="centerY" id="00t-wH-mDH"/>
-                            <constraint firstItem="P2L-MS-r3h" firstAttribute="width" secondItem="NB7-P7-uFd" secondAttribute="width" multiplier="0.413043" id="11I-I3-LLR"/>
+                            <constraint firstItem="P2L-MS-r3h" firstAttribute="width" secondItem="NB7-P7-uFd" secondAttribute="width" multiplier="0.8" id="11I-I3-LLR"/>
                             <constraint firstItem="P2L-MS-r3h" firstAttribute="centerX" secondItem="2vq-8s-Asz" secondAttribute="centerX" id="UVf-2C-X5e"/>
                         </constraints>
                     </view>
