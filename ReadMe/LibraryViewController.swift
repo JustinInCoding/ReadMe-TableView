@@ -32,12 +32,21 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class LibraryViewController: UITableViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
+    
   }
+	
+	// MARK: - DataSource
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		50
+	}
+	
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		return UITableViewCell()
+	}
 
 
 }
