@@ -37,15 +37,16 @@ class LibraryHeaderView: UITableViewHeaderFooterView {
 	@IBOutlet var titleLabel: UILabel!
 }
 
+enum Section: String, CaseIterable {
+	case addNew
+	case readMe = "Read Me!"
+	case finished = "Finished!"
+}
+
 class LibraryViewController: UITableViewController {
 	
-	enum Section: String, CaseIterable {
-		case addNew
-		case readMe = "Read Me!"
-		case finished = "Finished!"
-	}
 	
-	var dataSource: UITableViewDiffableDataSource<Section, Book>!
+	var dataSource: LibraryDataSource!
 
 	@IBSegueAction func showDetailView(_ coder: NSCoder) -> DetailViewController? {
 		guard let indexPath = tableView.indexPathForSelectedRow,
@@ -57,15 +58,17 @@ class LibraryViewController: UITableViewController {
 	
 	override func viewDidLoad() {
     super.viewDidLoad()
+		navigationItem.rightBarButtonItem = editButtonItem
+		
 		tableView.register(UINib(nibName: "\(LibraryHeaderView.self)", bundle: nil), forHeaderFooterViewReuseIdentifier: LibraryHeaderView.reuseIdentifier)
 		
 		configureDataSource()
-		updateDataSource()
+		dataSource.update()
   }
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		updateDataSource()
+		dataSource.update()
 	}
 	
 	// MARK: - Delegate
@@ -90,7 +93,7 @@ class LibraryViewController: UITableViewController {
 	
 	// MARK: - DataSource
 	func configureDataSource() {
-		dataSource = UITableViewDiffableDataSource(tableView: tableView, cellProvider: { tableView, indexPath, book in
+		dataSource = LibraryDataSource(tableView: tableView, cellProvider: { tableView, indexPath, book in
 			if indexPath == IndexPath(row: 0, section: 0) {
 				let cell = tableView.dequeueReusableCell(withIdentifier: "NewBookCell", for: indexPath)
 				return cell
@@ -111,7 +114,13 @@ class LibraryViewController: UITableViewController {
 		})
 	}
 	
-	func updateDataSource() {
+	
+
+}
+
+class LibraryDataSource: UITableViewDiffableDataSource<Section, Book> {
+	
+	func update() {
 		var newSnapshot = NSDiffableDataSourceSnapshot<Section, Book>()
 		newSnapshot.appendSections(Section.allCases)
 		let booksByReadMe: [Bool: [Book]] = Dictionary(grouping: Library.books, by: \.readMe)
@@ -119,33 +128,19 @@ class LibraryViewController: UITableViewController {
 			newSnapshot.appendItems(books, toSection: readMe ? .readMe : .finished)
 		}
 		newSnapshot.appendItems([Book.mockBook], toSection: .addNew)
-		dataSource.apply(newSnapshot, animatingDifferences: true)
+		apply(newSnapshot, animatingDifferences: true)
 	}
 	
-//	override func numberOfSections(in tableView: UITableView) -> Int {
-//		2
-//	}
-//	
-//	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//		return section == 0 ? 1 : Library.books.count
-//	}
-//	
-//	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//		if indexPath == IndexPath(row: 0, section: 0) {
-//			let cell = tableView.dequeueReusableCell(withIdentifier: "NewBookCell", for: indexPath)
-//			return cell
-//		}
-//		guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(BookCell.self)", for: indexPath) as? BookCell else {
-//			fatalError("Could not create BookCell")
-//		}
-//		let book = Library.books[indexPath.row]
-//		cell.titleLabel.text = book.title
-//		cell.authorLabel.text = book.author
-//		cell.bookThumbnail.image = book.image
-//		cell.bookThumbnail.layer.cornerRadius = 12
-//		return cell
-//	}
-
+	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		indexPath.section == snapshot().indexOfSection(.addNew) ? false : true
+	}
+	
+	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+		if editingStyle == .delete {
+			guard let book = self.itemIdentifier(for: indexPath) else { return }
+			Library.delete(book: book)
+			update()
+		}
+	}
 
 }
-
