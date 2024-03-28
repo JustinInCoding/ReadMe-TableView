@@ -27,6 +27,7 @@ class DetailViewController: UIViewController {
 		super.viewDidLoad()
 		
 		imageView.image = book.image
+		imageView.layer.cornerRadius = 16
 		titleLabel.text = book.title
 		authorLabel.text = book.author
 	}
